@@ -6,11 +6,15 @@ package org.thoughtworks.app;
  * Time: 下午8:32
  */
 public class Round {
-    public Round(int firstHit, int secondHit) {
+    private int firstHit;
+    private int secondHit;
 
+    public Round(int firstHit, int secondHit) {
+        this.firstHit = firstHit;
+        this.secondHit = secondHit;
     }
 
     public int hitDown() {
-        return 5;
+        return firstHit + secondHit;
     }
 }
