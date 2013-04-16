@@ -19,8 +19,11 @@ public class Scoreboard {
         this.roundRecord.add(round);
     }
 
-
-    public int getHitOfRound(int roundNumber) {
-        return 3;
+    public int hitsDownByRound(int roundNumber) {
+        int sum = 0;
+        for(int i = 0 ; i < roundNumber; i++){
+            sum += roundRecord.get(i).hitDownAll();
+        }
+        return sum;
     }
 }

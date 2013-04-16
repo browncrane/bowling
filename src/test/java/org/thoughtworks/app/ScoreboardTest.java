@@ -16,8 +16,14 @@ public class ScoreboardTest {
         Scoreboard scoreboard = new Scoreboard();
         int hitOne = 1;
         int hitTwo = 2;
+        int hitFour = 4;
         Round roundOne = new Round(hitOne,hitTwo);
+        Round roundTwo = new Round(hitOne,hitFour);
+        Round roundThree = new Round(hitFour,hitFour);
         scoreboard.record(roundOne);
-        assertThat(scoreboard.getHitOfRound(1),is(3));
+        scoreboard.record(roundTwo);
+        scoreboard.record(roundThree);
+        assertThat(scoreboard.hitsDownByRound(2),is(8));
+        assertThat(scoreboard.hitsDownByRound(3),is(16));
     }
 }
