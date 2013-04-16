@@ -26,4 +26,8 @@ public class Scoreboard {
         }
         return sum;
     }
+
+    public int currentRound() {
+        return 3;
+    }
 }
