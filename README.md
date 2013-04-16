@@ -1,4 +1,4 @@
-bowling
+Bowling
 =======
 
-A Bowling game scoring project
+A scoring project base on bowling game.

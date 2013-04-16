@@ -14,7 +14,7 @@ public class Round {
         this.secondHit = secondHit;
     }
 
-    public int hitDown() {
+    public int hitDownAll() {
         return firstHit + secondHit;
     }
 }

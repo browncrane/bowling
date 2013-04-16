@@ -15,7 +15,7 @@ public class RoundTest {
     public void should_return_the_sum_of_two_hits(){
         int firstHit = 1;
         int secondHit = 4;
-        Round round = new Round(1,4);
-        assertThat(round.hitDown(),is(5));
+        Round round = new Round(firstHit,secondHit);
+        assertThat(round.hitDownAll(),is(5));
     }
 }
