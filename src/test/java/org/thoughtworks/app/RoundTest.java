@@ -6,13 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-/**
- * User: crane
- * Date: 13-4-15
- * Time: 下午8:30
- */
 public class RoundTest {
-
     private Round normal;
     private Round spare;
 
@@ -27,8 +21,8 @@ public class RoundTest {
 
     @Test
     public void should_return_the_sum_of_two_hits() {
-        assertThat(normal.hitDownAll(), is(5));
-        assertThat(spare.hitDownAll(), is(10));
+        assertThat(normal.getScore(), is(5));
+        assertThat(spare.getScore(), is(10));
     }
 
     @Test

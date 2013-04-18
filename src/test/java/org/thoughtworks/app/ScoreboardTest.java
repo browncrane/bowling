@@ -6,18 +6,13 @@ import org.junit.Test;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-/**
- * User: crane
- * Date: 13-4-15
- * Time: 下午9:10
- */
 public class ScoreboardTest {
 
-    private Round roundOne;
-    private Round roundTwo;
-    private Round roundThree;
+    private Round roundHit1and2;
+    private Round roundHit1and4;
+    private Round roundHit4and4;
     private Scoreboard scoreboard;
-    private Round spareRound;
+    private Round spareHit5and5;
 
     @Before
     public void SetUp() {
@@ -25,18 +20,18 @@ public class ScoreboardTest {
         int hitTwo = 2;
         int hitFour = 4;
         int hitFive = 5;
-        roundOne = new Round(hitOne, hitTwo);
-        roundTwo = new Round(hitOne, hitFour);
-        roundThree = new Round(hitFour, hitFour);
-        spareRound = new Round(hitFive, hitFive);
+        roundHit1and2 = new Round(hitOne, hitTwo);
+        roundHit1and4 = new Round(hitOne, hitFour);
+        roundHit4and4 = new Round(hitFour, hitFour);
+        spareHit5and5 = new Round(hitFive, hitFive);
     }
 
     @Test
     public void should_return_score_for_certain_round() {
         scoreboard = new Scoreboard();
-        scoreboard.record(roundOne);
-        scoreboard.record(roundTwo);
-        scoreboard.record(roundThree);
+        scoreboard.record(roundHit1and2);
+        scoreboard.record(roundHit1and4);
+        scoreboard.record(roundHit4and4);
         assertThat(scoreboard.hitsDownByRound(2), is(8));
         assertThat(scoreboard.hitsDownByRound(3), is(16));
     }
@@ -44,18 +39,19 @@ public class ScoreboardTest {
     @Test
     public void should_return_current_round_if_no_strike() {
         scoreboard = new Scoreboard();
-        scoreboard.record(roundOne);
-        scoreboard.record(roundTwo);
-        scoreboard.record(roundThree);
+        scoreboard.record(roundHit1and2);
+        scoreboard.record(roundHit1and4);
+        scoreboard.record(roundHit4and4);
         assertThat(scoreboard.currentRound(), is(3));
     }
 
     @Test
     public void should_return_score_for_spare_round() throws Exception {
         scoreboard = new Scoreboard();
-        scoreboard.record(roundOne);
-        scoreboard.record(spareRound);
-        scoreboard.record(roundThree);
-//        assertThat(scoreboard.hitsDownByRound(2),is(14));
+        scoreboard.record(roundHit1and2);
+        scoreboard.record(spareHit5and5);
+        scoreboard.record(roundHit4and4);
+        assertThat(scoreboard.hitsDownByRound(2),is(17));
+        assertThat(scoreboard.hitsDownByRound(3),is(25));
     }
 }

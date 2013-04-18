@@ -3,11 +3,6 @@ package org.thoughtworks.app;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * User: crane
- * Date: 13-4-15
- * Time: 下午9:32
- */
 public class Scoreboard {
     private List<Round> roundRecord;
 
@@ -20,11 +15,30 @@ public class Scoreboard {
     }
 
     public int hitsDownByRound(int roundNumber) {
-        int sum = 0;
-        for(int i = 0 ; i < roundNumber; i++){
-            sum += roundRecord.get(i).hitDownAll();
+        return sumRoundScore(getRoundsBefore(roundNumber));
+    }
+
+    private int sumRoundScore(List<Round> rounds) {
+        int result = 0;
+        for (Round round : rounds) {
+            result += round.getScore();
+            if (round.isSpare()) {
+                result += nextRound(round).getFirstHit();
+            }
         }
-        return sum;
+        return result;
+    }
+
+    private Round nextRound(Round round) {
+        return roundRecord.get(roundRecord.indexOf(round) + 1);
+    }
+
+    private List<Round> getRoundsBefore(int roundNumber) {
+        List<Round> result = new ArrayList<Round>();
+        for (int roundIndex = 0; roundIndex < roundNumber; roundIndex++) {
+            result.add(roundRecord.get(roundIndex));
+        }
+        return result;
     }
 
     public int currentRound() {

@@ -1,12 +1,7 @@
 package org.thoughtworks.app;
 
-/**
- * User: crane
- * Date: 13-4-15
- * Time: 下午8:32
- */
 public class Round {
-    public static final int FULL = 10;
+    private static final int TOTAL_BOTTLE_NUM = 10;
     private int firstHit;
     private int secondHit;
 
@@ -15,12 +10,12 @@ public class Round {
         this.secondHit = secondHit;
     }
 
-    public int hitDownAll() {
+    public int getScore() {
         return firstHit + secondHit;
     }
 
     public boolean isSpare() {
-        return firstHit+secondHit == FULL;
+        return firstHit + secondHit == TOTAL_BOTTLE_NUM;
     }
 
     public int getFirstHit() {
