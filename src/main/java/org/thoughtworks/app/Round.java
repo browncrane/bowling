@@ -22,4 +22,8 @@ public class Round {
     public boolean isSpare() {
         return firstHit+secondHit == FULL;
     }
+
+    public int getFirstHit() {
+        return firstHit;
+    }
 }

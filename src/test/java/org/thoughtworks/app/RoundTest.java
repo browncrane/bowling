@@ -36,4 +36,10 @@ public class RoundTest {
         assertThat(spare.isSpare(), is(true));
         assertThat(normal.isSpare(), is(false));
     }
+
+    @Test
+    public void should_return_first_hit_score() throws Exception {
+        assertThat(normal.getFirstHit(), is(1));
+        assertThat(spare.getFirstHit(), is(5));
+    }
 }
