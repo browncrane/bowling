@@ -6,6 +6,7 @@ package org.thoughtworks.app;
  * Time: 下午8:32
  */
 public class Round {
+    public static final int FULL = 10;
     private int firstHit;
     private int secondHit;
 
@@ -16,5 +17,9 @@ public class Round {
 
     public int hitDownAll() {
         return firstHit + secondHit;
+    }
+
+    public boolean isSpare() {
+        return firstHit+secondHit == FULL;
     }
 }
