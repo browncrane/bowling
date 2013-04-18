@@ -22,14 +22,17 @@ public class Scoreboard {
         int result = 0;
         for (Round round : rounds) {
             result += round.getScore();
-            if (round.isSpare()) {
-                result += nextRound(round).getFirstHit();
-            }
+            if (notFinalRound(round))
+                result += round.getBonusScore(nextRound(round));
         }
         return result;
     }
 
-    private Round nextRound(Round round) {
+    private boolean notFinalRound(Round round) {
+        return roundRecord.indexOf(round) != roundRecord.size() - 1;
+    }
+
+    public Round nextRound(Round round) {
         return roundRecord.get(roundRecord.indexOf(round) + 1);
     }
 

@@ -21,4 +21,11 @@ public class Round {
     public int getFirstHit() {
         return firstHit;
     }
+
+    int getBonusScore(Round nextRound) {
+        if (isSpare()) {
+            return nextRound.getFirstHit();
+        }
+        return 0;
+    }
 }
