@@ -5,8 +5,15 @@ public class Round {
     private int firstHit;
     private int secondHit;
 
-    public Round(int firstHit, int secondHit) {
+    public Round(int firstHit) {
         this.firstHit = firstHit;
+    }
+
+    public static int totalBottleNum() {
+        return TOTAL_BOTTLE_NUM;
+    }
+
+    public void secondHit(int secondHit) {
         this.secondHit = secondHit;
     }
 
@@ -27,5 +34,9 @@ public class Round {
             return nextRound.getFirstHit();
         }
         return 0;
+    }
+
+    public boolean isStrike() {
+        return firstHit == TOTAL_BOTTLE_NUM;
     }
 }

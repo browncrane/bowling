@@ -14,7 +14,7 @@ public class Scoreboard {
         this.roundRecord.add(round);
     }
 
-    public int hitsDownByRound(int roundNumber) {
+    public int scoreByRound(int roundNumber) {
         return sumRoundScore(getRoundsBefore(roundNumber));
     }
 
@@ -23,7 +23,7 @@ public class Scoreboard {
         for (Round round : rounds) {
             result += round.getScore();
             if (notFinalRound(round))
-                result += round.getBonusScore(nextRound(round));
+                result += round.getBonusScore(nextRoundOf(round));
         }
         return result;
     }
@@ -32,7 +32,7 @@ public class Scoreboard {
         return roundRecord.indexOf(round) != roundRecord.size() - 1;
     }
 
-    public Round nextRound(Round round) {
+    public Round nextRoundOf(Round round) {
         return roundRecord.get(roundRecord.indexOf(round) + 1);
     }
 

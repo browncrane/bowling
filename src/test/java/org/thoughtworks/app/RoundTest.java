@@ -7,33 +7,42 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
 public class RoundTest {
-    private Round normal;
-    private Round spare;
+    private Round normalHit1and4;
+    private Round spareHit5and5;
 
     @Before
     public void SetUp() {
         int hitFour = 4;
         int hitOne = 1;
         int hitFive = 5;
-        normal = new Round(hitOne, hitFour);
-        spare = new Round(hitFive, hitFive);
+        normalHit1and4 = new Round(hitOne);
+        normalHit1and4.secondHit(hitFour);
+        spareHit5and5 = new Round(hitFive);
+        spareHit5and5.secondHit(hitFive);
     }
 
     @Test
     public void should_return_the_sum_of_two_hits() {
-        assertThat(normal.getScore(), is(5));
-        assertThat(spare.getScore(), is(10));
+        assertThat(normalHit1and4.getScore(), is(5));
+        assertThat(spareHit5and5.getScore(), is(10));
     }
 
     @Test
     public void should_return_true_if_the_round_is_spare() throws Exception {
-        assertThat(spare.isSpare(), is(true));
-        assertThat(normal.isSpare(), is(false));
+        assertThat(spareHit5and5.isSpare(), is(true));
+        assertThat(normalHit1and4.isSpare(), is(false));
     }
 
     @Test
     public void should_return_first_hit_score() throws Exception {
-        assertThat(normal.getFirstHit(), is(1));
-        assertThat(spare.getFirstHit(), is(5));
+        assertThat(normalHit1and4.getFirstHit(), is(1));
+        assertThat(spareHit5and5.getFirstHit(), is(5));
+    }
+
+    @Test
+    public void should_return_true_if_the_round_is_strike() throws Exception {
+        Round strike = new Round(Round.totalBottleNum());
+        assertThat(strike.isStrike(), is(true));
+        assertThat(spareHit5and5.isStrike(), is(false));
     }
 }

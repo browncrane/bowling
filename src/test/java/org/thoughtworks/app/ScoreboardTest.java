@@ -20,10 +20,14 @@ public class ScoreboardTest {
         int hitTwo = 2;
         int hitFour = 4;
         int hitFive = 5;
-        roundHit1and2 = new Round(hitOne, hitTwo);
-        roundHit1and4 = new Round(hitOne, hitFour);
-        roundHit4and4 = new Round(hitFour, hitFour);
-        spareHit5and5 = new Round(hitFive, hitFive);
+        roundHit1and2 = new Round(hitOne);
+        roundHit1and2.secondHit(hitTwo);
+        roundHit1and4 = new Round(hitOne);
+        roundHit1and4.secondHit(hitFour);
+        roundHit4and4 = new Round(hitFour);
+        roundHit4and4.secondHit(hitFour);
+        spareHit5and5 = new Round(hitFive);
+        spareHit5and5.secondHit(hitFive);
     }
 
     @Test
@@ -32,8 +36,8 @@ public class ScoreboardTest {
         scoreboard.record(roundHit1and2);
         scoreboard.record(roundHit1and4);
         scoreboard.record(roundHit4and4);
-        assertThat(scoreboard.hitsDownByRound(2), is(8));
-        assertThat(scoreboard.hitsDownByRound(3), is(16));
+        assertThat(scoreboard.scoreByRound(2), is(8));
+        assertThat(scoreboard.scoreByRound(3), is(16));
     }
 
     @Test
@@ -51,7 +55,7 @@ public class ScoreboardTest {
         scoreboard.record(roundHit1and2);
         scoreboard.record(spareHit5and5);
         scoreboard.record(roundHit4and4);
-        assertThat(scoreboard.hitsDownByRound(2),is(17));
-        assertThat(scoreboard.hitsDownByRound(3),is(25));
+        assertThat(scoreboard.scoreByRound(2),is(17));
+        assertThat(scoreboard.scoreByRound(3),is(25));
     }
 }
