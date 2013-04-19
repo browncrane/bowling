@@ -13,6 +13,7 @@ public class ScoreboardTest {
     private Round roundHit4and4;
     private Scoreboard scoreboard;
     private Round spareHit5and5;
+    private Round strike;
 
     @Before
     public void SetUp() {
@@ -28,6 +29,7 @@ public class ScoreboardTest {
         roundHit4and4.secondHit(hitFour);
         spareHit5and5 = new Round(hitFive);
         spareHit5and5.secondHit(hitFive);
+        strike = new Round(Round.totalBottleNum());
     }
 
     @Test
@@ -55,7 +57,16 @@ public class ScoreboardTest {
         scoreboard.record(roundHit1and2);
         scoreboard.record(spareHit5and5);
         scoreboard.record(roundHit4and4);
-        assertThat(scoreboard.scoreByRound(2),is(17));
-        assertThat(scoreboard.scoreByRound(3),is(25));
+        assertThat(scoreboard.scoreByRound(2), is(17));
+        assertThat(scoreboard.scoreByRound(3), is(25));
+    }
+
+    @Test
+    public void should_return_score_for_strike_round() throws Exception {
+        scoreboard = new Scoreboard();
+        scoreboard.record(roundHit1and2);
+        scoreboard.record(strike);
+        scoreboard.record(roundHit4and4);
+        assertThat(scoreboard.scoreByRound(2), is(21));
     }
 }

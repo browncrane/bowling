@@ -30,6 +30,9 @@ public class Round {
     }
 
     int getBonusScore(Round nextRound) {
+        if (isStrike()) {
+            return nextRound.getScore();
+        }
         if (isSpare()) {
             return nextRound.getFirstHit();
         }
