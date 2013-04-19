@@ -28,6 +28,16 @@ public class Scoreboard {
         return result;
     }
 
+    private int sumRoundScoreInAnotherWay(int roundNumber) {
+        int result = 0;
+        for (int i = 0; i < roundNumber; i++) {
+            result += roundRecord.get(i).getScore();
+            if (notFinalRound(roundRecord.get(i)))
+                result += roundRecord.get(i).getBonusScore(roundRecord.get(i + 1));
+        }
+        return result;
+    }
+
     private boolean notFinalRound(Round round) {
         return roundRecord.indexOf(round) != roundRecord.size() - 1;
     }
