@@ -15,43 +15,23 @@ public class Scoreboard {
     }
 
     public int scoreByRound(int roundNumber) {
-        return sumRoundScore(getRoundsBefore(roundNumber));
+        return sumByRoundSub(roundNumber);
     }
 
-    private int sumRoundScore(List<Round> rounds) {
-        int result = 0;
-        for (Round round : rounds) {
-            result += round.getScore();
-            if (notFinalRound(round))
-                result += round.getBonusScore(nextRoundOf(round));
-        }
-        return result;
-    }
-
-    private int sumRoundScoreInAnotherWay(int roundNumber) {
+    private int sumByRoundSub(int roundNumber) {
         int result = 0;
         for (int i = 0; i < roundNumber; i++) {
             result += roundRecord.get(i).getScore();
             if (notFinalRound(roundRecord.get(i)))
                 result += roundRecord.get(i).getBonusScore(roundRecord.get(i + 1));
+            if (roundRecord.get(i).isStrike() && roundRecord.get(i + 1).isStrike())
+                result += roundRecord.get(i+2).getFirstHit();
         }
         return result;
     }
 
     private boolean notFinalRound(Round round) {
         return roundRecord.indexOf(round) != roundRecord.size() - 1;
-    }
-
-    public Round nextRoundOf(Round round) {
-        return roundRecord.get(roundRecord.indexOf(round) + 1);
-    }
-
-    private List<Round> getRoundsBefore(int roundNumber) {
-        List<Round> result = new ArrayList<Round>();
-        for (int roundIndex = 0; roundIndex < roundNumber; roundIndex++) {
-            result.add(roundRecord.get(roundIndex));
-        }
-        return result;
     }
 
     public int currentRound() {
