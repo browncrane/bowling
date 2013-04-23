@@ -1,12 +1,15 @@
 package org.thoughtworks.app;
 
 public class BowlingGame {
+    private static final int LAST_ROUND = 10;
     private Scoreboard scoreboard;
     private boolean cleanRound;
     private Round currentRound;
 
     public void hit(int hitScore) {
         checkForHitScore(hitScore);
+        if(gameEnd())
+            throw new RuntimeException();
         makeRoundFromHit(hitScore);
         makeRoundIfStrike();
     }
@@ -14,7 +17,7 @@ public class BowlingGame {
     private void checkForHitScore(int hitScore) {
         if (hitScore > 10 || hitScore < 0)
             throw new RuntimeException();
-        if(!cleanRound && (currentRound.getFirstHit() + hitScore > 10))
+        if (!cleanRound && (currentRound.getFirstHit() + hitScore > 10))
             throw new RuntimeException();
     }
 
@@ -22,7 +25,7 @@ public class BowlingGame {
         if (cleanRound) {
             currentRound = new Round(hitScore);
             cleanRound = false;
-        }else {
+        } else {
             currentRound.secondHit(hitScore);
             makeRound();
         }
@@ -46,5 +49,13 @@ public class BowlingGame {
 
     public int currentRound() {
         return scoreboard.currentRound();
+    }
+
+    public boolean gameEnd() {
+        return scoreboard.currentRound() == LAST_ROUND + 1;
+    }
+
+    public int additionalRound() {
+        return 1;
     }
 }
