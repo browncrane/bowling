@@ -45,4 +45,12 @@ public class RoundTest {
         assertThat(strike.isStrike(), is(true));
         assertThat(spareHit5and5.isStrike(), is(false));
     }
+
+    @Test
+    public void should_return_true_if_strike_streak() throws Exception {
+        Round strike = new Round(Round.totalBottleNum());
+        Round strikeStreak = new Round(Round.totalBottleNum());
+        assertThat(strike.isStrikeStreak(strikeStreak), is(true));
+        assertThat(strikeStreak.isStrikeStreak(normalHit1and4), is(false));
+    }
 }

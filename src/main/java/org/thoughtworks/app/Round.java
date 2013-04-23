@@ -42,4 +42,8 @@ public class Round {
     public boolean isStrike() {
         return firstHit == TOTAL_BOTTLE_NUM;
     }
+
+    public boolean isStrikeStreak(Round nextRound) {
+        return nextRound.isStrike();
+    }
 }

@@ -66,7 +66,8 @@ public class ScoreboardTest {
         scoreboard = new Scoreboard();
         scoreboard.record(roundHit1and2);
         scoreboard.record(strike);
-        scoreboard.record(strike);
+        Round anotherStrike = new Round(Round.totalBottleNum());
+        scoreboard.record(anotherStrike);
         scoreboard.record(roundHit4and4);
         assertThat(scoreboard.scoreByRound(2), is(27));
     }
