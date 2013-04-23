@@ -17,19 +17,20 @@ public class ScoreboardTest {
 
     @Before
     public void SetUp() {
-        int hitOne = 1;
-        int hitTwo = 2;
-        int hitFour = 4;
-        int hitFive = 5;
-        roundHit1and2 = new Round(hitOne);
-        roundHit1and2.secondHit(hitTwo);
-        roundHit1and4 = new Round(hitOne);
-        roundHit1and4.secondHit(hitFour);
-        roundHit4and4 = new Round(hitFour);
-        roundHit4and4.secondHit(hitFour);
-        spareHit5and5 = new Round(hitFive);
-        spareHit5and5.secondHit(hitFive);
-        strike = new Round(Round.TOTAL_BOTTLE_NUM);
+        roundHit1and2 = new Round();
+        roundHit1and2.hit(1);
+        roundHit1and2.hit(2);
+        roundHit1and4 = new Round();
+        roundHit1and4.hit(1);
+        roundHit1and4.hit(4);
+        roundHit4and4 = new Round();
+        roundHit4and4.hit(4);
+        roundHit4and4.hit(4);
+        spareHit5and5 = new Round();
+        spareHit5and5.hit(5);
+        spareHit5and5.hit(5);
+        strike = new Round();
+        strike.hit(Round.TOTAL_BOTTLE_NUM);
     }
 
     @Test
@@ -57,7 +58,8 @@ public class ScoreboardTest {
         scoreboard = new Scoreboard();
         scoreboard.record(roundHit1and2);
         scoreboard.record(strike);
-        Round anotherStrike = new Round(Round.TOTAL_BOTTLE_NUM);
+        Round anotherStrike = new Round();
+        anotherStrike.hit(Round.TOTAL_BOTTLE_NUM);
         scoreboard.record(anotherStrike);
         scoreboard.record(roundHit4and4);
         assertThat(scoreboard.scoreByRound(2), is(27));

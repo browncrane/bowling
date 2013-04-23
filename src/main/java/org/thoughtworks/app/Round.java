@@ -4,12 +4,15 @@ public class Round {
     public static final int TOTAL_BOTTLE_NUM = 10;
     private int firstHit;
     private int secondHit;
+    private int hitCount;
 
-    public Round(int firstHit) {
-        this.firstHit = firstHit;
+    public Round() {
+        this.hitCount = 0;
     }
 
-    public void secondHit(int secondHit) {
+    private void setSecondHit(int secondHit) {
+        checkSecondHit(secondHit);
+        this.hitCount++;
         this.secondHit = secondHit;
     }
 
@@ -41,5 +44,41 @@ public class Round {
 
     public boolean isStrikeStreak(Round nextRound) {
         return isStrike() && nextRound.isStrike();
+    }
+
+    public boolean notStarted() {
+        return hitCount == 0;
+    }
+
+    private void setFirstHit(int firstHit) {
+        checkFirstHit(firstHit);
+        this.firstHit = firstHit;
+        this.hitCount++;
+    }
+
+    private void checkFirstHit(int firstHit) {
+        if (firstHit > TOTAL_BOTTLE_NUM || firstHit < 0)
+            throw new RuntimeException();
+    }
+
+    private void checkSecondHit(int hitScore) {
+        if (hitScore + getFirstHit() > TOTAL_BOTTLE_NUM)
+            throw new RuntimeException();
+    }
+
+    public boolean isFinish() {
+        if (isStrike() || hitCount == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    void hit(int hitScore) {
+        if (notStarted()) {
+            setFirstHit(hitScore);
+        } else {
+            setSecondHit(hitScore);
+        }
     }
 }

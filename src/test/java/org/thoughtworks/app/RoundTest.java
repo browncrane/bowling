@@ -9,16 +9,18 @@ import static org.hamcrest.core.Is.is;
 public class RoundTest {
     private Round normalHit1and4;
     private Round spareHit5and5;
+    private Round strikeRound;
 
     @Before
     public void SetUp() {
-        int hitFour = 4;
-        int hitOne = 1;
-        int hitFive = 5;
-        normalHit1and4 = new Round(hitOne);
-        normalHit1and4.secondHit(hitFour);
-        spareHit5and5 = new Round(hitFive);
-        spareHit5and5.secondHit(hitFive);
+        normalHit1and4 = new Round();
+        normalHit1and4.hit(1);
+        normalHit1and4.hit(4);
+        spareHit5and5 = new Round();
+        spareHit5and5.hit(5);
+        spareHit5and5.hit(5);
+        strikeRound = new Round();
+        strikeRound.hit(Round.TOTAL_BOTTLE_NUM);
     }
 
     @Test
@@ -41,19 +43,18 @@ public class RoundTest {
 
     @Test
     public void should_return_true_if_the_round_is_strike() throws Exception {
-        Round strike = new Round(Round.TOTAL_BOTTLE_NUM);
-        assertThat(strike.isStrike(), is(true));
+        assertThat(strikeRound.isStrike(), is(true));
         assertThat(spareHit5and5.isStrike(), is(false));
     }
 
     @Test
     public void should_return_true_for_is_strike_streak_if_hit_all_down_continuous() throws Exception {
-        assertStrikeStreak(new Round(Round.TOTAL_BOTTLE_NUM), new Round(Round.TOTAL_BOTTLE_NUM), true);
+        assertStrikeStreak(strikeRound, strikeRound, true);
     }
 
     @Test
     public void should_return_false_for_is_strike_streak_if_not_hit_all_down() throws Exception {
-        assertStrikeStreak(normalHit1and4, new Round(Round.TOTAL_BOTTLE_NUM), false);
+        assertStrikeStreak(normalHit1and4, strikeRound, false);
     }
 
     private void assertStrikeStreak(Round currentRound, Round nextRound, boolean result) {
