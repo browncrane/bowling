@@ -1,23 +1,42 @@
 package org.thoughtworks.app;
 
 public class BowlingGame {
-    private int firstHitInRound;
-    private int secondHitInRound;
+    private Scoreboard scoreboard;
+    private boolean cleanRound;
+    private Round currentRound;
 
-    public void firstHitInRound(int hitScore) {
-        firstHitInRound = hitScore;
+    public void hit(int hitScore) {
+        makeRoundFromHit(hitScore);
+        makeRoundIfStrike();
     }
 
-
-    public void secondHitInRound(int hitScore) {
-        secondHitInRound = hitScore;
+    private void makeRoundFromHit(int hitScore) {
+        if (cleanRound) {
+            currentRound = new Round(hitScore);
+            cleanRound = false;
+        }else {
+            currentRound.secondHit(hitScore);
+            makeRound();
+        }
     }
 
-    public Round currentRound() {
-        Round round = new Round(firstHitInRound);
-        round.secondHit(this.secondHitInRound);
-        return round;
+    private void makeRoundIfStrike() {
+        if (currentRound.getFirstHit() == Round.totalBottleNum()) {
+            makeRound();
+        }
     }
 
+    private void makeRound() {
+        cleanRound = true;
+        scoreboard.record(currentRound);
+    }
 
+    public BowlingGame() {
+        this.scoreboard = new Scoreboard();
+        cleanRound = true;
+    }
+
+    public int currentRound() {
+        return scoreboard.currentRound();
+    }
 }

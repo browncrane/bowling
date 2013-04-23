@@ -43,15 +43,6 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void should_return_current_round_if_no_strike() {
-        scoreboard = new Scoreboard();
-        scoreboard.record(roundHit1and2);
-        scoreboard.record(roundHit1and4);
-        scoreboard.record(roundHit4and4);
-        assertThat(scoreboard.currentRound(), is(3));
-    }
-
-    @Test
     public void should_return_score_for_spare_round() throws Exception {
         scoreboard = new Scoreboard();
         scoreboard.record(roundHit1and2);

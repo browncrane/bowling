@@ -39,6 +39,8 @@ public class Scoreboard {
         return roundRecord.indexOf(round) != roundRecord.size() - 1;
     }
 
+    //find round in this way,make us can input one round twice
+    //But they should be two round with same value
     public Round nextRoundOf(Round round) {
         return roundRecord.get(roundRecord.indexOf(round) + 1);
     }
@@ -51,7 +53,8 @@ public class Scoreboard {
         return result;
     }
 
-    public int currentRound() {
-        return 3;
+    //when start with no hit,it's already round 1
+    int currentRound(){
+        return roundRecord.size() + 1;
     }
 }
