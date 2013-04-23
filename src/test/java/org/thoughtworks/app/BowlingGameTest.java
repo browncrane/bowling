@@ -67,10 +67,16 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void should_return_have_one_additional_round_if_round_10_is_spare() throws Exception {
+    public void should_return_one_if_round_10_is_spare() throws Exception {
         bowlingGameWith9Round.hit(6);
         bowlingGameWith9Round.hit(4);
-        assertThat(bowlingGameWith9Round.additionalRound(), is(1));
+        assertThat(bowlingGameWith9Round.additionalHit(), is(1));
+    }
+
+    @Test
+    public void should_return_two_round_if_round_10_is_strike() throws Exception {
+        bowlingGameWith9Round.hit(10);
+        assertThat(bowlingGameWith9Round.additionalHit(), is(2));
     }
 
     @Test(expected = RuntimeException.class)
@@ -80,5 +86,14 @@ public class BowlingGameTest {
         bowlingGameWith9Round.hit(4);
         assertThat(bowlingGameWith9Round.gameEnd(), is(true));
         bowlingGameWith9Round.hit(3);
+    }
+
+//    @Test
+    public void should_have_1_additional_hit_if_round_10_is_spare() throws Exception {
+        bowlingGameWith9Round.hit(6);
+        bowlingGameWith9Round.hit(4);
+        assertThat(bowlingGameWith9Round.gameEnd(), is(false));
+        bowlingGameWith9Round.hit(5);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(114));
     }
 }

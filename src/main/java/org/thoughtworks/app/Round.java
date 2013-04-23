@@ -1,16 +1,12 @@
 package org.thoughtworks.app;
 
 public class Round {
-    private static final int TOTAL_BOTTLE_NUM = 10;
+    public static final int TOTAL_BOTTLE_NUM = 10;
     private int firstHit;
     private int secondHit;
 
     public Round(int firstHit) {
         this.firstHit = firstHit;
-    }
-
-    public static int totalBottleNum() {
-        return TOTAL_BOTTLE_NUM;
     }
 
     public void secondHit(int secondHit) {
@@ -22,7 +18,7 @@ public class Round {
     }
 
     public boolean isSpare() {
-        return firstHit + secondHit == TOTAL_BOTTLE_NUM;
+        return firstHit + secondHit == TOTAL_BOTTLE_NUM && !isStrike();
     }
 
     public int getFirstHit() {

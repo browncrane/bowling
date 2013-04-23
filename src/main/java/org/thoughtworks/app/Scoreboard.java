@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scoreboard {
+    public static final int BONUS_HITS_FOR_SPARE = 1;
+    public static final int BONUS_HITS_FOR_STRIKE = 2;
     private List<Round> roundRecord;
 
     public Scoreboard() {
@@ -19,14 +21,14 @@ public class Scoreboard {
     }
 
     private int sumRoundScore(List<Round> rounds) {
-        int result = 0;
+        int sumScore = 0;
         for (Round round : rounds) {
-            result += round.getScore();
+            sumScore += round.getScore();
             if (notFinalRound(round)) {
-                result += round.getBonusScore(nextRoundOf(round)) + getBonusForStrikeStreak(round);
+                sumScore += round.getBonusScore(nextRoundOf(round)) + getBonusForStrikeStreak(round);
             }
         }
-        return result;
+        return sumScore;
     }
 
     private int getBonusForStrikeStreak(Round round) {
@@ -54,7 +56,26 @@ public class Scoreboard {
     }
 
     //when start with no hit,it's already round 1
-    int currentRound(){
+    int currentRound() {
         return roundRecord.size() + 1;
+    }
+
+    public int additionalHit(int finalRound) {
+        if (currentRound() == finalRound) {
+            return getBonusHits();
+        }
+        return 0;
+    }
+
+    private Round getFinalRound() {
+        return roundRecord.get(9);
+    }
+
+    private int getBonusHits() {
+        if (getFinalRound().isSpare())
+            return BONUS_HITS_FOR_SPARE;
+        if (getFinalRound().isStrike())
+            return BONUS_HITS_FOR_STRIKE;
+        return 0;
     }
 }

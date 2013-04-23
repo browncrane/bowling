@@ -1,23 +1,23 @@
 package org.thoughtworks.app;
 
 public class BowlingGame {
-    private static final int LAST_ROUND = 10;
+    private static final int ROUND_AFTER_NORMAL_LENGTH = 11;
     private Scoreboard scoreboard;
     private boolean cleanRound;
     private Round currentRound;
 
     public void hit(int hitScore) {
-        checkForHitScore(hitScore);
-        if(gameEnd())
+        checkHitScore(hitScore);
+        if (gameEnd())
             throw new RuntimeException();
         makeRoundFromHit(hitScore);
         makeRoundIfStrike();
     }
 
-    private void checkForHitScore(int hitScore) {
-        if (hitScore > 10 || hitScore < 0)
+    private void checkHitScore(int hitScore) {
+        if (hitScore > Round.TOTAL_BOTTLE_NUM || hitScore < 0)
             throw new RuntimeException();
-        if (!cleanRound && (currentRound.getFirstHit() + hitScore > 10))
+        if ((!cleanRound) && (hitScore + currentRound.getFirstHit() > Round.TOTAL_BOTTLE_NUM))
             throw new RuntimeException();
     }
 
@@ -32,7 +32,7 @@ public class BowlingGame {
     }
 
     private void makeRoundIfStrike() {
-        if (currentRound.getFirstHit() == Round.totalBottleNum()) {
+        if (currentRound.getFirstHit() == Round.TOTAL_BOTTLE_NUM) {
             makeRound();
         }
     }
@@ -52,10 +52,14 @@ public class BowlingGame {
     }
 
     public boolean gameEnd() {
-        return scoreboard.currentRound() == LAST_ROUND + 1;
+        return scoreboard.currentRound() == ROUND_AFTER_NORMAL_LENGTH + additionalHit();
     }
 
-    public int additionalRound() {
-        return 1;
+    public int additionalHit() {
+        return scoreboard.additionalHit(ROUND_AFTER_NORMAL_LENGTH);
+    }
+
+    public int getScoreByRound(int roundNumber) {
+        return scoreboard.scoreByRound(roundNumber);
     }
 }

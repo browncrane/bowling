@@ -29,7 +29,7 @@ public class ScoreboardTest {
         roundHit4and4.secondHit(hitFour);
         spareHit5and5 = new Round(hitFive);
         spareHit5and5.secondHit(hitFive);
-        strike = new Round(Round.totalBottleNum());
+        strike = new Round(Round.TOTAL_BOTTLE_NUM);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ScoreboardTest {
         scoreboard = new Scoreboard();
         scoreboard.record(roundHit1and2);
         scoreboard.record(strike);
-        Round anotherStrike = new Round(Round.totalBottleNum());
+        Round anotherStrike = new Round(Round.TOTAL_BOTTLE_NUM);
         scoreboard.record(anotherStrike);
         scoreboard.record(roundHit4and4);
         assertThat(scoreboard.scoreByRound(2), is(27));

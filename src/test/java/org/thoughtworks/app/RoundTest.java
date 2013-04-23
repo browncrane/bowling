@@ -41,17 +41,22 @@ public class RoundTest {
 
     @Test
     public void should_return_true_if_the_round_is_strike() throws Exception {
-        Round strike = new Round(Round.totalBottleNum());
+        Round strike = new Round(Round.TOTAL_BOTTLE_NUM);
         assertThat(strike.isStrike(), is(true));
         assertThat(spareHit5and5.isStrike(), is(false));
     }
 
     @Test
-    public void should_return_true_if_strike_streak() throws Exception {
-        Round strike = new Round(Round.totalBottleNum());
-        Round strikeStreak = new Round(Round.totalBottleNum());
-        assertThat(strike.isStrikeStreak(strikeStreak), is(true));
-        assertThat(strikeStreak.isStrikeStreak(normalHit1and4), is(false));
-        assertThat(normalHit1and4.isStrikeStreak(strike), is(false));
+    public void should_return_true_for_is_strike_streak_if_hit_all_down_continuous() throws Exception {
+        assertStrikeStreak(new Round(Round.TOTAL_BOTTLE_NUM), new Round(Round.TOTAL_BOTTLE_NUM), true);
+    }
+
+    @Test
+    public void should_return_false_for_is_strike_streak_if_not_hit_all_down() throws Exception {
+        assertStrikeStreak(normalHit1and4, new Round(Round.TOTAL_BOTTLE_NUM), false);
+    }
+
+    private void assertStrikeStreak(Round currentRound, Round nextRound, boolean result) {
+        assertThat(currentRound.isStrikeStreak(nextRound), is(result));
     }
 }
