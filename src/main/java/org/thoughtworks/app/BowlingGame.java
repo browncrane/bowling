@@ -6,8 +6,16 @@ public class BowlingGame {
     private Round currentRound;
 
     public void hit(int hitScore) {
+        checkForHitScore(hitScore);
         makeRoundFromHit(hitScore);
         makeRoundIfStrike();
+    }
+
+    private void checkForHitScore(int hitScore) {
+        if (hitScore > 10 || hitScore < 0)
+            throw new RuntimeException();
+        if(!cleanRound && (currentRound.getFirstHit() + hitScore > 10))
+            throw new RuntimeException();
     }
 
     private void makeRoundFromHit(int hitScore) {

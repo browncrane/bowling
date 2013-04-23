@@ -19,4 +19,17 @@ public class BowlingGameTest {
         assertThat(bowlingGame.currentRound(), is(3));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_hit_score_not_in_0_and_10() throws RuntimeException {
+        BowlingGame bowlingGame = new BowlingGame();
+        bowlingGame.hit(11);
+        bowlingGame.hit(-1);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_two_hits_more_than_10() throws RuntimeException {
+        BowlingGame bowlingGame =new BowlingGame();
+        bowlingGame.hit(7);
+        bowlingGame.hit(7);
+    }
 }
