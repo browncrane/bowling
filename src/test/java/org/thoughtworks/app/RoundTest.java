@@ -52,5 +52,6 @@ public class RoundTest {
         Round strikeStreak = new Round(Round.totalBottleNum());
         assertThat(strike.isStrikeStreak(strikeStreak), is(true));
         assertThat(strikeStreak.isStrikeStreak(normalHit1and4), is(false));
+        assertThat(normalHit1and4.isStrikeStreak(strike), is(false));
     }
 }

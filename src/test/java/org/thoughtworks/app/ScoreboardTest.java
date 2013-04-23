@@ -62,7 +62,7 @@ public class ScoreboardTest {
     }
 
     @Test
-    public void should_return_score_for_strike_round() throws Exception {
+    public void should_return_score_for_strike_streak() throws Exception {
         scoreboard = new Scoreboard();
         scoreboard.record(roundHit1and2);
         scoreboard.record(strike);

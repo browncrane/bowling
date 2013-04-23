@@ -44,6 +44,6 @@ public class Round {
     }
 
     public boolean isStrikeStreak(Round nextRound) {
-        return nextRound.isStrike();
+        return isStrike() && nextRound.isStrike();
     }
 }
