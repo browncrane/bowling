@@ -55,9 +55,8 @@ public class Scoreboard {
         return result;
     }
 
-    //when start with no hit,it's already round 1
-    int currentRoundNumber() {
-        return roundRecord.size() + 1;
+    int finishedRound() {
+        return roundRecord.size();
     }
 
     public int additionalHit(int finalRoundNumber) {
@@ -74,5 +73,4 @@ public class Scoreboard {
     private Round getFinalRound() {
         return roundRecord.get(9);
     }
-
 }

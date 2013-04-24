@@ -19,8 +19,9 @@ public class BowlingGame {
         this.currentRound = new Round();
     }
 
+    //when start with no hit,it's already round 1
     public int currentRoundNumber() {
-        return scoreboard.currentRoundNumber();
+        return scoreboard.finishedRound() + 1;
     }
 
     public boolean gameOver() {

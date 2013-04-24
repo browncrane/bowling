@@ -53,7 +53,7 @@ public class BowlingGameTest {
         assertThat(bowlingGameWith9Round.gameOver(), is(true));
     }
 
-    @Ignore@Test
+    @Test@Ignore
     public void should_return_one_if_round_10_is_spare() throws Exception {
         bowlingGameWith9Round.hit(6);
         bowlingGameWith9Round.hit(4);

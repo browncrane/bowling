@@ -82,6 +82,6 @@ public class RoundTest {
 
     @Test(expected = RuntimeException.class)
     public void should_throw_exception_if_hit_three_times_in_round() throws Exception {
-        normalHit1and4.hit(3);
+        normalHit1and4.hit(5);
     }
 }
