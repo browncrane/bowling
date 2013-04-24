@@ -2,7 +2,7 @@ package org.thoughtworks.app;
 
 public class Round {
     public static final int TOTAL_BOTTLE_NUM = 10;
-    public static final int MAX_TRY_IN_ROUND = 2;
+    private static final int MAX_TRY_IN_ROUND = 2;
     private int firstHit;
     private int secondHit;
     private int hitCount;
