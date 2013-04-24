@@ -1,7 +1,7 @@
 package org.thoughtworks.app;
 
 public class BowlingGame {
-    private static final int GAME_LENGTH = 11;
+    private static final int GAME_LENGTH = 10;
     private Scoreboard scoreboard;
     private Round currentRound;
 
@@ -25,7 +25,7 @@ public class BowlingGame {
     }
 
     public boolean gameOver() {
-        return currentRoundNumber() == GAME_LENGTH + additionalHit();
+        return currentRoundNumber() > GAME_LENGTH + additionalHit();
     }
 
     public int additionalHit() {

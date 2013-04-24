@@ -60,7 +60,7 @@ public class Scoreboard {
     }
 
     public int additionalHit(int finalRoundNumber) {
-        if (roundRecord.size() == finalRoundNumber) {
+        if (finishedRound() == finalRoundNumber) {
             if (getFinalRound().isSpare())
                 return BONUS_HITS_FOR_SPARE;
             if (getFinalRound().isStrike())
