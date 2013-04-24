@@ -29,7 +29,7 @@ public class BowlingGame {
     }
 
     public int additionalHit() {
-        return scoreboard.additionalHit(GAME_LENGTH);
+        return scoreboard.additionalHitAfterRound(GAME_LENGTH);
     }
 
     public int getScoreByRound(int roundNumber) {

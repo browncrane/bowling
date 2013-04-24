@@ -53,19 +53,6 @@ public class BowlingGameTest {
         assertThat(bowlingGameWith9Round.gameOver(), is(true));
     }
 
-    @Test@Ignore
-    public void should_return_one_if_round_10_is_spare() throws Exception {
-        bowlingGameWith9Round.hit(6);
-        bowlingGameWith9Round.hit(4);
-        assertThat(bowlingGameWith9Round.additionalHit(), is(1));
-    }
-
-    @Test@Ignore
-    public void should_return_two_round_if_round_10_is_strike() throws Exception {
-        bowlingGameWith9Round.hit(10);
-        assertThat(bowlingGameWith9Round.additionalHit(), is(2));
-    }
-
     @Test(expected = RuntimeException.class)
     public void should_thrown_exception_if_hit_after_game_end() throws Exception {
         assertThat(bowlingGameWith9Round.currentRoundNumber(), is(10));
