@@ -2,6 +2,7 @@ package org.thoughtworks.app;
 
 public class Round {
     public static final int TOTAL_BOTTLE_NUM = 10;
+    public static final int MAX_TRY_IN_ROUND = 2;
     private int firstHit;
     private int secondHit;
     private int hitCount;
@@ -16,7 +17,7 @@ public class Round {
         this.secondHit = secondHit;
     }
 
-    public int getScore() {
+    public int getHitsScoreInRound() {
         return firstHit + secondHit;
     }
 
@@ -30,7 +31,7 @@ public class Round {
 
     int getBonusScore(Round nextRound) {
         if (isStrike()) {
-            return nextRound.getScore();
+            return nextRound.getHitsScoreInRound();
         }
         if (isSpare()) {
             return nextRound.getFirstHit();
@@ -67,18 +68,20 @@ public class Round {
     }
 
     public boolean isFinish() {
-        if (isStrike() || hitCount == 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return isStrike() || hitCount == MAX_TRY_IN_ROUND;
     }
 
     void hit(int hitScore) {
+        checkForHitCounts();
         if (notStarted()) {
             setFirstHit(hitScore);
         } else {
             setSecondHit(hitScore);
         }
+    }
+
+    private void checkForHitCounts() {
+        if (isFinish())
+            throw new RuntimeException();
     }
 }

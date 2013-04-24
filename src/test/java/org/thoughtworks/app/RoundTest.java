@@ -25,8 +25,8 @@ public class RoundTest {
 
     @Test
     public void should_return_the_sum_of_two_hits() {
-        assertThat(normalHit1and4.getScore(), is(5));
-        assertThat(spareHit5and5.getScore(), is(10));
+        assertThat(normalHit1and4.getHitsScoreInRound(), is(5));
+        assertThat(spareHit5and5.getHitsScoreInRound(), is(10));
     }
 
     @Test
@@ -59,5 +59,29 @@ public class RoundTest {
 
     private void assertStrikeStreak(Round currentRound, Round nextRound, boolean result) {
         assertThat(currentRound.isStrikeStreak(nextRound), is(result));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_two_hits_more_than_10() throws RuntimeException {
+        Round round = new Round();
+        round.hit(7);
+        round.hit(7);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_hit_score_bigger_than_10() throws RuntimeException {
+        Round round = new Round();
+        round.hit(11);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_hit_score_smaller_than_0() throws RuntimeException {
+        Round round = new Round();
+        round.hit(-1);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void should_throw_exception_if_hit_three_times_in_round() throws Exception {
+        normalHit1and4.hit(3);
     }
 }

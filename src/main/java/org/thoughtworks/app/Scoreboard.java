@@ -23,7 +23,7 @@ public class Scoreboard {
     private int sumRoundScore(List<Round> rounds) {
         int sumScore = 0;
         for (Round round : rounds) {
-            sumScore += round.getScore();
+            sumScore += round.getHitsScoreInRound();
             if (notFinalRound(round)) {
                 sumScore += round.getBonusScore(nextRoundOf(round)) + getBonusForStrikeStreak(round);
             }
@@ -56,13 +56,17 @@ public class Scoreboard {
     }
 
     //when start with no hit,it's already round 1
-    int currentRound() {
+    int currentRoundNumber() {
         return roundRecord.size() + 1;
     }
 
-    public int additionalHit(int finalRound) {
-        if (currentRound() == finalRound) {
-            return getBonusHits();
+    public int additionalHit(int finalRoundNumber) {
+        if (roundRecord.size() == finalRoundNumber) {
+            if (getFinalRound().isSpare())
+                return BONUS_HITS_FOR_SPARE;
+            if (getFinalRound().isStrike())
+                return BONUS_HITS_FOR_STRIKE;
+            return 0;
         }
         return 0;
     }
@@ -71,11 +75,4 @@ public class Scoreboard {
         return roundRecord.get(9);
     }
 
-    private int getBonusHits() {
-        if (getFinalRound().isSpare())
-            return BONUS_HITS_FOR_SPARE;
-        if (getFinalRound().isStrike())
-            return BONUS_HITS_FOR_STRIKE;
-        return 0;
-    }
 }
