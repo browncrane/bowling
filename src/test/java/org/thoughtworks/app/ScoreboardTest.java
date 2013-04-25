@@ -91,4 +91,16 @@ public class ScoreboardTest {
         scoreboard.record(strike);
         assertThat(scoreboard.additionalHitAfterRound(3), is(2));
     }
+
+    @Test
+    public void should_have_2_additional_round_if_final_round_is_strike_and_next_hit_is_strike() throws Exception {
+        scoreboard = new Scoreboard();
+        scoreboard.record(roundHit1and2);
+        scoreboard.record(roundHit4and4);
+        scoreboard.record(strike);
+        Round strikeAgain = new Round();
+        strikeAgain.hit(Round.TOTAL_BOTTLE_NUM);
+        scoreboard.record(strikeAgain);
+        assertThat(scoreboard.additionalRoundAfterRound(3), is(2));
+    }
 }

@@ -60,16 +60,20 @@ public class Scoreboard {
     }
 
     public int additionalHitAfterRound(int finalRoundNumber) {
-        if (finishedRound() == finalRoundNumber) {
-            if (getFinalRound(finalRoundNumber).isSpare())
-                return BONUS_HITS_FOR_SPARE;
-            if (getFinalRound(finalRoundNumber).isStrike())
-                return BONUS_HITS_FOR_STRIKE;
-        }
+        if (getFinalRound(finalRoundNumber).isSpare())
+            return BONUS_HITS_FOR_SPARE;
+        if (getFinalRound(finalRoundNumber).isStrike())
+            return BONUS_HITS_FOR_STRIKE;
         return 0;
     }
 
-    private Round getFinalRound(int finalRoundNumber) {
+    public Round getFinalRound(int finalRoundNumber) {
         return roundRecord.get(finalRoundNumber - 1);
+    }
+
+    public int additionalRoundAfterRound(int finalRoundNumber) {
+        if (getFinalRound(finalRoundNumber).isStrikeStreak(nextRoundOf(getFinalRound(finalRoundNumber))))
+            return additionalHitAfterRound(finalRoundNumber);
+        return 1;
     }
 }

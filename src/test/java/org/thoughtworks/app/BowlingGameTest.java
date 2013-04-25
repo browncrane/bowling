@@ -1,6 +1,7 @@
 package org.thoughtworks.app;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -46,26 +47,55 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void should_return_true_for_game_end_if_round_10_no_spare_or_strike() throws Exception {
-        bowlingGameWith9Round.hit(3);
+    public void should_return_true_for_game_over_if_final_round_not_strike_or_spare() throws Exception {
+        bowlingGameWith9Round.hit(5);
         bowlingGameWith9Round.hit(4);
         assertThat(bowlingGameWith9Round.gameOver(), is(true));
+    }
+
+    @Test
+    public void should_return_false_for_game_over_if_final_round_is_spare() throws Exception {
+        bowlingGameWith9Round.hit(6);
+        bowlingGameWith9Round.hit(4);
+        assertThat(bowlingGameWith9Round.gameOver(), is(false));
+    }
+
+    @Test
+    public void should_return_false_for_game_over_if_final_round_is_strike() throws Exception {
+        bowlingGameWith9Round.hit(10);
+        assertThat(bowlingGameWith9Round.gameOver(), is(false));
     }
 
     @Test(expected = RuntimeException.class)
     public void should_thrown_exception_if_hit_after_game_end() throws Exception {
         bowlingGameWith9Round.hit(5);
         bowlingGameWith9Round.hit(4);
-        assertThat(bowlingGameWith9Round.gameOver(), is(true));
         bowlingGameWith9Round.hit(3);
     }
 
     @Test
-    public void should_have_1_additional_hit_if_final_round_is_strike() throws Exception {
+    public void should_have_2_additional_hit_if_final_round_is_strike() throws Exception {
         bowlingGameWith9Round.hit(10);
         assertThat(bowlingGameWith9Round.getScoreByRound(9), is(99));
         bowlingGameWith9Round.hit(4);
         bowlingGameWith9Round.hit(5);
         assertThat(bowlingGameWith9Round.getScoreByRound(10), is(118));
+    }
+
+    @Test
+    public void should_have_1_additional_hit_if_final_round_is_spare() throws Exception {
+        bowlingGameWith9Round.hit(6);
+        bowlingGameWith9Round.hit(4);
+        bowlingGameWith9Round.hit(5);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(114));
+    }
+
+    @Test
+    @Ignore
+    public void should_have_2_additional_round_if_final_is_strike_streak() throws Exception {
+        bowlingGameWith9Round.hit(10);
+        bowlingGameWith9Round.hit(10);
+        bowlingGameWith9Round.hit(5);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(124));
     }
 }

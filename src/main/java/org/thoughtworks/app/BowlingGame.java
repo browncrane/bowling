@@ -6,9 +6,9 @@ public class BowlingGame {
     private Round currentRound;
 
     public void hit(int hitScore) {
-        if (gameOver()) throw new RuntimeException();
+        if (normalRoundFinished() && additionalRoundFinished()) throw new RuntimeException();
         currentRound.hit(hitScore);
-        if (currentRound.isFinish()) {
+        if (currentRound.isFinish() || (normalRoundFinished() && additionalHit() == 1)) {
             scoreboard.record(currentRound);
             currentRound = new Round();
         }
@@ -25,11 +25,19 @@ public class BowlingGame {
     }
 
     public boolean gameOver() {
-        return currentRoundNumber() > GAME_LENGTH + additionalHit();
+        return normalRoundFinished() && additionalRoundFinished();
+    }
+
+    private boolean additionalRoundFinished() {
+        return additionalHit() == 0;
     }
 
     public int additionalHit() {
         return scoreboard.additionalHitAfterRound(GAME_LENGTH);
+    }
+
+    private boolean normalRoundFinished() {
+        return currentRoundNumber() > GAME_LENGTH;
     }
 
     public int getScoreByRound(int roundNumber) {
