@@ -1,7 +1,6 @@
 package org.thoughtworks.app;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -74,7 +73,7 @@ public class BowlingGameTest {
     }
 
     @Test
-    public void should_have_2_additional_hit_if_final_round_is_strike() throws Exception {
+    public void should_have_2_additional_hits_if_final_round_is_strike() throws Exception {
         bowlingGameWith9Round.hit(10);
         assertThat(bowlingGameWith9Round.additionalHit(), is(2));
     }
@@ -87,11 +86,17 @@ public class BowlingGameTest {
     }
 
     @Test
-    @Ignore
-    public void should_have_2_additional_round_if_final_is_strike_streak() throws Exception {
-        bowlingGameWith9Round.hit(10);
-        bowlingGameWith9Round.hit(10);
-        bowlingGameWith9Round.hit(5);
-        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(124));
+    public void should_score_for_final_round_not_spare_or_strike() throws Exception {
+        bowlingGameWith9Round.hit(6);
+        bowlingGameWith9Round.hit(3);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(108));
+    }
+
+    @Test
+    public void should_score_for_final_round_is_spare() throws Exception {
+        bowlingGameWith9Round.hit(6);
+        bowlingGameWith9Round.hit(4);
+        bowlingGameWith9Round.hit(1);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10),is(110));
     }
 }

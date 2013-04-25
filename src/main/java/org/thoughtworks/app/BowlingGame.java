@@ -6,16 +6,9 @@ public class BowlingGame {
     private Round currentRound;
 
     public void hit(int hitScore) {
-        if (normalRoundFinished() && additionalRoundFinished()) throw new RuntimeException();
-        if (!normalRoundFinished()) {
-            currentRound.hit(hitScore);
-            if (currentRound.isFinish() ) {
-                scoreboard.record(currentRound);
-                currentRound = new Round();
-            }
-        }
-        if(normalRoundFinished() && additionalHit() == 1){
-            currentRound.hit(hitScore);
+        if (normalRoundFinished() && noAdditionalRound()) throw new RuntimeException();
+        currentRound.hit(hitScore);
+        if (currentRound.isFinish() || (normalRoundFinished() && additionalHit() == 1)) {
             scoreboard.record(currentRound);
             currentRound = new Round();
         }
@@ -32,10 +25,10 @@ public class BowlingGame {
     }
 
     public boolean gameOver() {
-        return normalRoundFinished() && additionalRoundFinished();
+        return normalRoundFinished() && noAdditionalRound();
     }
 
-    private boolean additionalRoundFinished() {
+    private boolean noAdditionalRound() {
         return additionalHit() == 0;
     }
 
