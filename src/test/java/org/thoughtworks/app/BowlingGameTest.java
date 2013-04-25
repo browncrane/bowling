@@ -97,6 +97,14 @@ public class BowlingGameTest {
         bowlingGameWith9Round.hit(6);
         bowlingGameWith9Round.hit(4);
         bowlingGameWith9Round.hit(1);
-        assertThat(bowlingGameWith9Round.getScoreByRound(10),is(110));
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(110));
+    }
+
+    @Test
+    public void should_score_for_final_round_is_strike() throws Exception {
+        bowlingGameWith9Round.hit(10);
+        bowlingGameWith9Round.hit(4);
+        bowlingGameWith9Round.hit(5);
+        assertThat(bowlingGameWith9Round.getScoreByRound(10), is(118));
     }
 }

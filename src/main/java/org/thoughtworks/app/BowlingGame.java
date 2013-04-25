@@ -8,10 +8,21 @@ public class BowlingGame {
     public void hit(int hitScore) {
         if (normalRoundFinished() && noAdditionalRound()) throw new RuntimeException();
         currentRound.hit(hitScore);
-        if (currentRound.isFinish() || (normalRoundFinished() && additionalHit() == 1)) {
-            scoreboard.record(currentRound);
-            currentRound = new Round();
+        if(finalRoundIsSpare()){
+            recordCurrentRoundStartNext();
         }
+        if (currentRound.isFinish()) {
+            recordCurrentRoundStartNext();
+        }
+    }
+
+    private boolean finalRoundIsSpare() {
+        return !currentRound.isFinish() && normalRoundFinished() && additionalHit() == 1;
+    }
+
+    private void recordCurrentRoundStartNext() {
+        scoreboard.record(currentRound);
+        currentRound = new Round();
     }
 
     public BowlingGame() {
