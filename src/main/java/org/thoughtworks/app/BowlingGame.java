@@ -2,48 +2,74 @@ package org.thoughtworks.app;
 
 public class BowlingGame {
     private static final int GAME_LENGTH = 10;
-    public static final int BONUS_HIT_FOR_FINAL_IS_STRIKE = 2;
-    public static final int BONUS_HIT_FOR_FINAL_IS_SPARE = 1;
+    public static final int BONUS_HITS_FOR_FINAL_IS_STRIKE = 2;
+    public static final int BONUS_HITS_FOR_FINAL_IS_SPARE = 1;
     private Scoreboard scoreboard;
     private Round currentRound;
+    private int additionalHitUsed = 0;
 
     public void hit(int hitScore) {
-        if (normalRoundFinished() && noAdditionalRound()) throw new RuntimeException();
+        checkIfGameOver();
+        if (normalRoundFinished()) {
+            makeRoundForAdditionalGame(hitScore);
+        } else {
+            makeRoundForNormalGame(hitScore);
+        }
+    }
+
+    private void makeRoundForNormalGame(int hitScore) {
         currentRound.hit(hitScore);
-        makeRoundForIncompleteRoundInAdditionalRound();
+        recordCompleteRound();
+    }
+
+    private void makeRoundForAdditionalGame(int hitScore) {
+        currentRound.hit(hitScore);
+        recordCompleteRound();
+        recordIncompleteRoundInAdditionalGame();
+    }
+
+    private void checkIfGameOver() {
+        if (normalRoundFinished()) {
+            additionalHitUsed++;
+            if (noAdditionalRound() || additionalHitUsed > additionalHits())
+                throw new RuntimeException();
+        }
+    }
+
+    private void recordCompleteRound() {
         if (currentRound.isFinish()) {
             recordCurrentRoundStartNext();
         }
     }
 
-    private void makeRoundForIncompleteRoundInAdditionalRound() {
-        if(currentRoundIsAdditionalRoundForSpare()){
+    private void recordCurrentRoundStartNext() {
+        scoreboard.record(currentRound);
+        currentRound = new Round();
+    }
+
+    private void recordIncompleteRoundInAdditionalGame() {
+        if (currentRoundIsAdditionalRoundForSpare()) {
             recordCurrentRoundStartNext();
         }
-        if(finalRoundIsStrikeStreak()){
+        if (finalRoundIsStrikeStreak()) {
             recordCurrentRoundStartNext();
         }
     }
 
     private boolean finalRoundIsStrikeStreak() {
-        return normalRoundFinished() && finalRoundIsStrike() && !currentRound.isFinish() && currentRoundNumber() > GAME_LENGTH + 1;
+        return finalRoundIsStrike() && currentRoundNumber() == GAME_LENGTH + BONUS_HITS_FOR_FINAL_IS_STRIKE && additionalHitUsed == BONUS_HITS_FOR_FINAL_IS_STRIKE;
     }
 
     private boolean finalRoundIsStrike() {
-        return additionalHit() == BONUS_HIT_FOR_FINAL_IS_STRIKE;
+        return additionalHits() == BONUS_HITS_FOR_FINAL_IS_STRIKE;
     }
 
     private boolean currentRoundIsAdditionalRoundForSpare() {
-        return !currentRound.isFinish() && normalRoundFinished() && finalRoundIsSpare();
+        return additionalHitUsed == BONUS_HITS_FOR_FINAL_IS_SPARE && finalRoundIsSpare();
     }
 
     private boolean finalRoundIsSpare() {
-        return additionalHit() == BONUS_HIT_FOR_FINAL_IS_SPARE;
-    }
-
-    private void recordCurrentRoundStartNext() {
-        scoreboard.record(currentRound);
-        currentRound = new Round();
+        return additionalHits() == BONUS_HITS_FOR_FINAL_IS_SPARE;
     }
 
     public BowlingGame() {
@@ -61,10 +87,10 @@ public class BowlingGame {
     }
 
     private boolean noAdditionalRound() {
-        return additionalHit() == 0;
+        return additionalHits() == 0;
     }
 
-    public int additionalHit() {
+    public int additionalHits() {
         return scoreboard.additionalHitAfterRound(GAME_LENGTH);
     }
 
